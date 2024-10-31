@@ -1,7 +1,6 @@
 import requests
 
-url_root = "http://127.0.0.1:8000/"
-search_api_url = url_root + "prediccion"
+search_api_url = "http://127.0.0.1:8000/prediccion"
 
 # CASO 1 -> Tipo de fraude: 0/False
 data = {
@@ -27,3 +26,5 @@ data = {
 #response = requests.get(search_api_url)
 #print(response.json())
 
+response = requests.post(search_api_url, json=data)
+print(response.json())
