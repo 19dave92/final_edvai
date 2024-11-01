@@ -33,7 +33,7 @@ with open(BINS_TRANSACTION, 'rb') as handle:
     new_saved_bins_transaction = pickle.load(handle)
 
 ## Ajustamos lo que tenemos como json a un dataframe
-"""
+
 class Answer(BaseModel):
     orderAmount : float
     orderState : str
@@ -47,16 +47,15 @@ class Answer(BaseModel):
     emailDomain : str
     customerIPAddressSimplified : str
     sameCity : str
-"""
+
 @app.get("/")
 def read_root():
     return {"message" : "Proyecto para Bootcamp de EDVAI----"}
 
-@app.get("/predict")
-def predict_fraud_customer():
+@app.post("/predict")
+def predict_fraud_customer(answer: Answer):
     
-    """
-    answer_dict = jsonable_encoder(data)
+    answer_dict = jsonable_encoder(answer)
 
     for key, value in answer_dict.items():
         answer_dict[key] = [value]
@@ -82,9 +81,8 @@ def predict_fraud_customer():
     type_of_fraud = int(prediction[0])
     
     response = {"Tipo de fraude": type_of_fraud}
-    """
     
-    return  {"hola" : "mundo"}
+    return response
 
 #Segmento uvicorn
 #_Corre en http://127.0.0.1:8000

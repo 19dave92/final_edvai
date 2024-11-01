@@ -1,21 +1,21 @@
 import requests
 
-search_api_url = "http://127.0.0.1:8000"
+search_api_url = "http://127.0.0.1:8000/predict"
 
 # CASO 1 -> Tipo de fraude: 0/False
 data = {
-    "orderAmount" : 18.0,
-    "orderState" : "pending",
+    "orderAmount" : 26.0,
+    "orderState" : "fulfilled",
     "paymentMethodRegistrationFailure" : "True",
-    "paymentMethodType" : "card",
-    "paymentMethodProvider" : "JCB 16 digit",
-    "paymentMethodIssuer" : "Citizens First Banks",
-    "transactionAmount" : 18,
+    "paymentMethodType" : "bitcoin",
+    "paymentMethodProvider" : "VISA 16 digit",
+    "paymentMethodIssuer" : "Solace Banks",
+    "transactionAmount" : 26,
     "transactionFailed" : False,
     "emailProvider" : "yahoo",
     "emailDomain" : "com",
     "customerIPAddressSimplified" : "only_letters",
-    "sameCity" : "yes"
+    "sameCity" : "no"
 }
 
 #Acceder al index / home:
@@ -26,5 +26,5 @@ data = {
 #response = requests.get(search_api_url)
 #print(response.json())
 
-response = requests.post(search_api_url)
+response = requests.post(search_api_url, json=data)
 print(response.json())
