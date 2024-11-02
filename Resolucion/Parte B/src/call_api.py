@@ -1,8 +1,27 @@
 import requests
 
-search_api_url = "http://127.0.0.1:8000/predict"
+#search_api_url = "http://127.0.0.1:8000/prediccion"
+search_api_url = "http://0.0.0.0:7860/prediccion"
 
+"""
 # CASO 1 -> Tipo de fraude: 0/False
+data = {
+    "orderAmount" : 18.0,
+    "orderState" : "pending",
+    "paymentMethodRegistrationFailure" : "True",
+    "paymentMethodType" : "card",
+    "paymentMethodProvider" : "JCB 16 digit",
+    "paymentMethodIssuer" : "Citizens First Banks",
+    "transactionAmount" : 18,
+    "transactionFailed" : False,
+    "emailProvider" : "yahoo",
+    "emailDomain" : "com",
+    "customerIPAddressSimplified" : "only_letters",
+    "sameCity" : "yes"
+}
+"""
+
+# CASO 2 -> Tipo de fraude: 1/True
 data = {
     "orderAmount" : 26.0,
     "orderState" : "fulfilled",

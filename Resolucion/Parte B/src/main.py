@@ -12,23 +12,24 @@ import os
 app = FastAPI()
 
 #Cargamos el modelo de predicción 
-#with open("D:/EDVai/Bootcamp/final_edvai/model/modelo_proyecto_final.pkl", 'rb') as f:
-with open("C:/Users/Usuario/Documents/FINAL/final_edvai/model/modelo_proyecto_final.pkl", 'rb') as f:    
+#with open("../../../model/modelo_proyecto_final.pkl", 'rb') as f:     #Local
+with open("../model/modelo_proyecto_final.pkl", 'rb') as f:      #Docker
     # Lo cargamos para usarlo en otro momento. 
     model = pickle.load(f)
 
-#COLUMNS_PATH = "D:/EDVai/Bootcamp/final_edvai/model/categories_ohe_without_fraudulent.pickle"
-COLUMNS_PATH = "C:/Users/Usuario/Documents/FINAL/final_edvai/model/categories_ohe_without_fraudulent.pickle"
+
+#COLUMNS_PATH = "../../../model/categories_ohe_without_fraudulent.pickle"    #Local
+COLUMNS_PATH = "../model/categories_ohe_without_fraudulent.pickle"    #Docker
 with open(COLUMNS_PATH, 'rb') as handle:
     ohe_tr = pickle.load(handle)
 
-#BINS_ORDER = os.path.join("D:/EDVai/Bootcamp/final_edvai/model/saved_bins_order.pickle")
-BINS_ORDER = os.path.join("C:/Users/Usuario/Documents/FINAL/final_edvai/model/saved_bins_order.pickle")
+#BINS_ORDER = os.path.join("../../../model/saved_bins_order.pickle") #Local
+BINS_ORDER = os.path.join("../model/saved_bins_order.pickle") #Docker
 with open(BINS_ORDER, 'rb') as handle:
     new_saved_bins_order = pickle.load(handle)
 
-#BINS_TRANSACTION = os.path.join("D:/EDVai/Bootcamp/final_edvai/model/saved_bins_transaction.pickle")
-BINS_TRANSACTION = os.path.join("C:/Users/Usuario/Documents/FINAL/final_edvai/model/saved_bins_transaction.pickle")
+#BINS_TRANSACTION = os.path.join("../../../model/saved_bins_transaction.pickle") #Local
+BINS_TRANSACTION = os.path.join("../model/saved_bins_transaction.pickle") #Docker
 with open(BINS_TRANSACTION, 'rb') as handle:
     new_saved_bins_transaction = pickle.load(handle)
 
@@ -52,7 +53,7 @@ class Answer(BaseModel):
 def read_root():
     return {"message" : "Proyecto para Bootcamp de EDVAI----"}
 
-@app.post("/predict")
+@app.post("/prediccion")
 def predict_fraud_customer(answer: Answer):
     
     answer_dict = jsonable_encoder(answer)
@@ -88,5 +89,5 @@ def predict_fraud_customer(answer: Answer):
 #_Corre en http://127.0.0.1:8000
 
 if __name__ == '__main__':
-    uvicorn.run(app, host='127.0.0.1', port=8000) #prueba local
-    #uvicorn.run(app, host='0.0.0.0', port=7860) #produccion
+    #uvicorn.run(app, host='127.0.0.1', port=8000) #prueba local
+    uvicorn.run(app, host='0.0.0.0', port=7860) #produccion
