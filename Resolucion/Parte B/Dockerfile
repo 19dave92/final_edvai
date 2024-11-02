@@ -2,9 +2,9 @@ FROM python:3.9
 
 WORKDIR /app
 
-COPY ./src /app/src
+COPY ./src/main.py /app/src
 
-COPY ../../../model /app/
+COPY ./model /app/model
 
 COPY requirements.txt /app
 
