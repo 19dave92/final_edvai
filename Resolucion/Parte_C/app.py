@@ -6,23 +6,23 @@ import pandas as pd
 
 
 #Cargamos el modelo de predicción 
-MODEL_PATH = os.path.join("model", "modelo_proyecto_final.pkl")
-with open("model/proyecto_final_edvai.pkl", 'rb') as f:
+MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', '..', 'model', 'modelo_proyecto_final.pkl')
+with open(MODEL_PATH, 'rb') as f:
     # Lo cargamos para usarlo en otro momento. 
     model = pickle.load(f)
 
 #Columnas
-COLUMNS_PATH = os.path.join("model","categories_ohe_without_fraudulent.pickle")
+COLUMNS_PATH = os.path.join(os.path.dirname(__file__), '..', '..', 'model', 'categories_ohe_without_fraudulent.pickle')
 with open(COLUMNS_PATH, 'rb') as handle:
     ohe_tr = pickle.load(handle)
 
 #Puntos de corte 'orders'
-BINS_ORDER = os.path.join("model","saved_bins_order.pickle") 
+BINS_ORDER = os.path.join(os.path.dirname(__file__), '..', '..', 'model', 'saved_bins_order.pickle') 
 with open(BINS_ORDER, 'rb') as handle:
     new_saved_bins_order = pickle.load(handle)
 
 #Puntos de corte 'transactions'
-BINS_TRANSACTION = os.path.join("model","saved_bins_transaction.pickle") 
+BINS_TRANSACTION = os.path.join(os.path.dirname(__file__), '..', '..', 'model','saved_bins_transaction.pickle') 
 with open(BINS_TRANSACTION, 'rb') as handle:
     new_saved_bins_transaction = pickle.load(handle)
 
@@ -85,7 +85,7 @@ def predict(*args):
 
     return response
 
-    ####################
+    ####################__Comienzo Front End
 
 with gr.Blocks() as demo:
 
@@ -210,6 +210,14 @@ with gr.Blocks() as demo:
                 outputs=[label],
                 api_name="prediccion"
             )
+
+    gr.Markdown(
+        """
+        <p style='text-align: center'> 
+            Desarrollado por <a href='https://www.linkedin.com/in/david-espejo-/ target='_blank'>David Espejo</a>        
+        </p>
+        """
+    )
 
 
 demo.launch()
