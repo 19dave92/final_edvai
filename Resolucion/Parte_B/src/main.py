@@ -12,26 +12,27 @@ import os
 app = FastAPI()
 
 #Cargamos el modelo de predicción 
-#with open("../../../model/modelo_proyecto_final.pkl", 'rb') as f:     #Local
-MAIN_FOLDER = os.path.dirname(__file__)
-MODEL_PATH = os.path.join(MAIN_FOLDER, "../model/modelo_proyecto_final.pkl")
-with open("/app/model/modelo_proyecto_final.pkl", 'rb') as f:      #Docker
+try:
+    MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', '..', '..', 'model', 'modelo_proyecto_final.pkl')
+except:
+    MODEL_PATH = "/app/model/modelo_proyecto_final.pkl"
+
+with open(MODEL_PATH, 'rb') as f:
     # Lo cargamos para usarlo en otro momento. 
     model = pickle.load(f)
 
-
-#COLUMNS_PATH = "../../../model/categories_ohe_without_fraudulent.pickle"    #Local
-COLUMNS_PATH = "model/categories_ohe_without_fraudulent.pickle"    #Docker
+#Columnas
+COLUMNS_PATH = os.path.join(os.path.dirname(__file__), '..','..', '..', 'model', 'categories_ohe_without_fraudulent.pickle')
 with open(COLUMNS_PATH, 'rb') as handle:
     ohe_tr = pickle.load(handle)
 
-#BINS_ORDER = os.path.join("../../../model/saved_bins_order.pickle") #Local
-BINS_ORDER = os.path.join("model/saved_bins_order.pickle") #Docker
+#Puntos de corte 'orders'
+BINS_ORDER = os.path.join(os.path.dirname(__file__), '..', '..', '..', 'model', 'saved_bins_order.pickle') 
 with open(BINS_ORDER, 'rb') as handle:
     new_saved_bins_order = pickle.load(handle)
 
-#BINS_TRANSACTION = os.path.join("../../../model/saved_bins_transaction.pickle") #Local
-BINS_TRANSACTION = os.path.join("model/saved_bins_transaction.pickle") #Docker
+#Puntos de corte 'transactions'
+BINS_TRANSACTION = os.path.join(os.path.dirname(__file__), '..', '..', '..', 'model','saved_bins_transaction.pickle') 
 with open(BINS_TRANSACTION, 'rb') as handle:
     new_saved_bins_transaction = pickle.load(handle)
 
@@ -68,13 +69,13 @@ def predict_fraud_customer(answer: Answer):
     # Manejar puntos de corte o bins
     single_instance["orderAmount"] = single_instance["orderAmount"].astype(float)
     single_instance["orderAmount"] = pd.cut(single_instance['orderAmount'],
-                                    bins=new_saved_bins_order, 
-                                    include_lowest=True)
+                                            bins=new_saved_bins_order, 
+                                            include_lowest=True)
 
     single_instance["transactionAmount"] = single_instance["transactionAmount"].astype(int)
-    single_instance["transactionAmount"] = pd.cut(single_instance['transactionAmount'],
-                                    bins=new_saved_bins_order, 
-                                    include_lowest=True)
+    single_instance["transactionAmount"] = pd.cut(single_instance['transactionAmount'], 
+                                                  bins=new_saved_bins_order, 
+                                                  include_lowest=True)
 
     # One hot encoding
     single_instance_ohe = pd.get_dummies(single_instance).reindex(columns = ohe_tr).fillna(0)
@@ -87,9 +88,7 @@ def predict_fraud_customer(answer: Answer):
     
     return response
 
-#Segmento uvicorn
-#_Corre en http://127.0.0.1:8000
 
+#Segmento uvicorn
 if __name__ == '__main__':
-    #uvicorn.run(app, host='127.0.0.1', port=8000) #prueba local
-    uvicorn.run(app, host='0.0.0.0', port=7860) #produccion
+    uvicorn.run(app, host='0.0.0.0', port=7860) #_Se accede con localhost:7860

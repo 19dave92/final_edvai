@@ -1,7 +1,5 @@
 import requests
 
-#search_api_url = "http://127.0.0.1:8000/prediccion"
-#search_api_url = "http://0.0.0.0:7860/prediccion"
 search_api_url = "http://localhost:7860/prediccion"
 
 
@@ -37,14 +35,6 @@ data2 = {
     "customerIPAddressSimplified" : "only_letters",
     "sameCity" : "no"
 }
-
-#Acceder al index / home:
-#response = requests.get(url_root)
-#print(response.json())
-
-# Llamada al endpoint prediccion
-#response = requests.get(search_api_url)
-#print(response.json())
 
 response = requests.post(search_api_url, json=data2)
 print(response.json())
