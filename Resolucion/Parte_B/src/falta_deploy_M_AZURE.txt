@@ -1,8 +1,0 @@
-[OPCIONAL] Microsoft Azure ✨
-Pueden hacer el deploy de su Docker haciendo uso del método 1: Docker Hub + Web App o el método 2: Container Registry + Web App
-
-Una vez deployado el proyecto, tomen una foto tipo:
-
-Deploy Exitoso
-
-Una vez hecho eso, NO olviden eliminar los recursos de Azure

@@ -146,4 +146,4 @@
 
 Hagan su despliegue de su interfaz gráfica en Hugging Face.
 
-Y peguen el link de su proyecto acá: _________________
+Y peguen el link de su proyecto acá: https://huggingface.co/spaces/19dave92/prediccion_fraude_bancario

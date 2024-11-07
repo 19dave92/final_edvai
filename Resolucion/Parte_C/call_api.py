@@ -1,42 +1,36 @@
-import requests
+from gradio_client import Client
 
-search_api_url = "http://127.0.0.1:7860/call/predict"
+client = Client("http://127.0.0.1:7860/")
 
-# CASO 1 -> Tipo de fraude: 0/False
-data1 = {
-    "data": [
-        18.0,
-        "pending",
-        "True",
-        "card",
-        "JCB 16 digit",
-        "Citizens First Banks",
-        18,
-        "False",
-        "com",
-        "yahoo",
-        "only_letters",
-        "yes"  
-    ]
-}
+caso_1 = client.predict(
+		param_0=18.0,
+		param_1="pending",
+		param_2="True",
+		param_3="card",
+		param_4="JCB 16 digit",
+		param_5="Citizens First Banks",
+		param_6=18,
+		param_7="False",
+		param_8="yahoo",
+		param_9="com",
+		param_10="only_letters",
+		param_11="yes",
+		api_name="/run/prediccion"
+)
 
-# CASO 2 -> Tipo de fraude: 1/True
-data2 = {
-"data": [
-    26.0,
-    "fulfilled",
-    "True",
-    "bitcoin",
-    "VISA 16 digit",
-    "Solace Banks",
-    26,
-    "False",
-    "com",
-    "yahoo",
-    "only_letters",
-    "no" 
-    ]
-}
-
-response = requests.post(search_api_url, json=data2)
-print(response.json())
+caso_2 = client.predict(
+		param_0=26.0,
+		param_1="fullfiled",
+		param_2="True",
+		param_3="bitcoin",
+		param_4="VISA 16 digit",
+		param_5="Solace Banks",
+		param_6=26,
+		param_7="False",
+		param_8="yahoo",
+		param_9="com",
+		param_10="only_letters",
+		param_11="no",
+		api_name="/run/prediccion"
+)
+print("Tipo de fraude:", caso_2['label'])

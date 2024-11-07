@@ -14,8 +14,6 @@ app = FastAPI()
 path = os.getcwd()
 last_part = os.path.basename(path)
 
-print(">>>>>>>>>>>>>>>>> ",last_part)
-
 if (last_part == "final_edvai" or last_part == "src"):
     MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', '..', '..', 'model', 'modelo_proyecto_final.pkl')
     COLUMNS_PATH = os.path.join(os.path.dirname(__file__), '..','..', '..', 'model', 'categories_ohe_without_fraudulent.pickle')
@@ -28,27 +26,22 @@ else:
     BINS_TRANSACTION = "/app/model/saved_bins_transaction.pickle"
 
 #Cargamos el modelo de predicción 
-#MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', '..', '..', 'model', 'modelo_proyecto_final.pkl')
 with open(MODEL_PATH, 'rb') as f:
     # Lo cargamos para usarlo en otro momento. 
     model = pickle.load(f)
 
 #Columnas
-#COLUMNS_PATH = os.path.join(os.path.dirname(__file__), '..','..', '..', 'model', 'categories_ohe_without_fraudulent.pickle')
 with open(COLUMNS_PATH, 'rb') as handle:
     ohe_tr = pickle.load(handle)
 
 #Puntos de corte 'orders'
-#BINS_ORDER = os.path.join(os.path.dirname(__file__), '..', '..', '..', 'model', 'saved_bins_order.pickle') 
 with open(BINS_ORDER, 'rb') as handle:
     new_saved_bins_order = pickle.load(handle)
 
 #Puntos de corte 'transactions'
-#BINS_TRANSACTION = os.path.join(os.path.dirname(__file__), '..', '..', '..', 'model','saved_bins_transaction.pickle') 
 with open(BINS_TRANSACTION, 'rb') as handle:
     new_saved_bins_transaction = pickle.load(handle)
 
-## Ajustamos lo que tenemos como json a un dataframe
 
 class Answer(BaseModel):
     orderAmount : float

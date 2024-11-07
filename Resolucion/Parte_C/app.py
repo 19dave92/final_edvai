@@ -180,7 +180,7 @@ with gr.Blocks() as demo:
                                          value="only_letters"
                                          )
             
-            sameCity = gr.Radio(label="Same city \n(Representa si la compra y el envio corresponden a la misma ciudad)",
+            sameCity = gr.Radio(label="Same city",
                                          choices=["no","yes","unknown"],
                                          value="unknown"
                                          )
@@ -208,14 +208,44 @@ with gr.Blocks() as demo:
                     sameCity,
                 ],
                 outputs=[label],
-                api_name="prediccion"
+                api_name="run/prediccion"
             )
+
+            gr.Markdown(
+                """
+                ## Mediante la interface creada con Gradio, podemos seleccionar distintos parámetros que simulan una transacción y el modelo de predicción se encarga de predecir si el cliente es fraudulento o no.
+
+                **Explicación de los parámetros:**
+
+                * **"order Amount"**: Monto del pedido.
+                * **"orderState"**: Estado del pedido.
+                * **"payment Method Registration Failure"**: Error en el registro del método de pago.
+                * **"payment Method Type"**: Tipo de método de pago.
+                * **"payment Method Provider"**: "Proveedor del método de pago.
+                * **"payment Method Issuer"**: Emisor del método de pago.
+                * **"transaction Amount"**: Monto de la transacción.
+                * **"transaction Failed"**: Transacción fallida.
+                * **"email Provider"**: Proveedor de correo electrónico.
+                * **"email Domain"**: Dominio del correo electrónico.
+                * **"customer Ip Address"**: Dirección IP del cliente.
+                * **"same City"**: Misma ciudad (Representa si la compra y el envío corresponden a la misma ciudad).
+
+                * **Tipo de fraude (salida)**: **True**: Si es fraude | **False**: No es fraude | **Warning**: Posible fraude.
+                """)
 
     gr.Markdown(
         """
-        <p style='text-align: center'> 
-            Desarrollado por <a href='https://www.linkedin.com/in/david-espejo-/ target='_blank'>David Espejo</a>        
-        </p>
+        <center>
+            <div>        
+                <p style='text-align: center'> 
+                    Desarrollado por <a href='https://www.linkedin.com/in/david-espejo-/ target='_blank'>David Espejo</a>        
+                <p style='text-align: center'>
+                    <a href='https://www.escueladedatosvivos.ai/cursos/bootcamp-de-data-science' 
+                        target='_blank'>Proyecto demo creado en el bootcamp de EDVAI 🤗
+                    </a>
+                </p>
+            </div>
+        </center>
         """
     )
 
